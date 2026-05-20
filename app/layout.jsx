@@ -1,177 +1,120 @@
 // app/layout.jsx
 
 import "./globals.css";
-import { LanguageProvider } from '@/contexts/LanguageContext';
 
 export const metadata = {
-  title: "مطبخ ام خاطر | طبخ بيتي - أكل صحي - توصيل سريع في دبي | Um Khater Kitchen Dubai",
-  description: "مطبخ ام خاطر - أفضل مطبخ بيتي في دبي. وجبات طازجة يومياً، طبخ منزلي صحي، أكلات عربية أصيلة، توصيل سريع لكل أنحاء دبي. اطلب الآن واستمتع بطعم البيت الأصيل | Um Khater Kitchen - Best homemade food in Dubai, fresh daily meals, healthy home cooking, authentic Arabic cuisine, fast delivery across Dubai",
-  
+  title: "Wedding Invitation | Youssef & Mariam",
+  description: "You are cordially invited to celebrate the wedding of Youssef El-Sayed and Mariam Fouad. Join us for an evening of love, laughter, and cherished memories.",
+
   icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/icon.png', type: 'image/png' },
-    ],
-    apple: '/apple-icon.png',
-    shortcut: '/favicon.ico',
+    // الـ emoji favicon بيتعمل inline في الـ <head> مباشرة عن طريق SVG
+    // شوف الـ <head> في RootLayout تحت
   },
-  
-  manifest: '/site.webmanifest',
-  
+
   keywords: [
-    // كلمات عربية
-    "مطبخ ام خاطر",
-    "طبخ بيتي دبي",
-    "أكل بيتي دبي",
-    "وجبات صحية دبي",
-    "طعام منزلي دبي",
-    "مطبخ منزلي",
-    "أكلات عربية دبي",
-    "وجبات طازجة",
-    "توصيل طعام دبي",
-    "غداء بيتي",
-    "عشاء بيتي",
-    "طبخات يومية",
-    "أكل صحي",
-    "وجبات جاهزة",
-    "مطابخ منزلية دبي",
-    
-    // كلمات إنجليزية
-    "Um Khater Kitchen",
-    "home cooked food Dubai",
-    "homemade meals Dubai",
-    "healthy food Dubai",
-    "Arabic food Dubai",
-    "fresh meals Dubai",
-    "home kitchen Dubai",
-    "daily meals",
-    "food delivery Dubai",
-    "authentic Arabic cuisine",
-    "home cooking",
-    "traditional food"
+    "wedding invitation",
+    "electronic invitation",
+    "Youssef Mariam wedding",
+    "دعوة إلكترونية",
+    "دعوة زفاف",
+    "حفل زفاف",
   ].join(", "),
-  
-  authors: [{ name: "Um Khater Kitchen" }],
-  creator: "Um Khater Kitchen",
-  publisher: "Um Khater Kitchen",
-  
+
+  authors: [{ name: "Youssef & Mariam" }],
+  creator: "Wedding Invitation",
+
   robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
+    index: false,  // دعوات الأفراح الخاصة ما محتاجة تتأشر في Google
+    follow: false,
   },
-  
-  alternates: {
-    canonical: 'https://yourdomain.com', // غير الدومين هنا
-    languages: {
-      'ar': 'https://yourdomain.com/ar',
-      'en': 'https://yourdomain.com/en',
-    },
-  },
-  
+
   openGraph: {
-    type: 'website',
-    locale: 'ar_AE',
-    alternateLocale: ['en_US'],
-    url: 'https://yourdomain.com', // غير الدومين هنا
-    siteName: 'مطبخ ام خاطر | Um Khater Kitchen',
-    title: 'مطبخ ام خاطر - أفضل طبخ بيتي في دبي | Um Khater Kitchen Dubai',
-    description: 'مطبخ ام خاطر - وجبات طازجة يومياً، طبخ منزلي صحي، أكلات عربية أصيلة، توصيل سريع لكل أنحاء دبي. طعم البيت الأصيل',
+    type: "website",
+    locale: "ar_EG",
+    alternateLocale: ["en_US"],
+    siteName: "Wedding Invitation",
+    title: "You're Invited — Youssef & Mariam",
+    description:
+      "Join us as we celebrate the beginning of our new life together. An evening of love, laughter, and cherished memories.",
     images: [
       {
-        url: 'https://github.com/hanynan8/Menu-Pic/blob/main/WhatsApp%20Image%202025-12-14%20at%204.55.14%20PM.jpeg?raw=true',
+        url: "https://images.unsplash.com/photo-1548092372-0d1bd40894a3?w=1200&q=80",
         width: 1200,
         height: 630,
-        alt: 'مطبخ ام خاطر - طبخ بيتي في دبي',
+        alt: "Youssef & Mariam Wedding Invitation",
       },
     ],
   },
-  
+
   twitter: {
-    card: 'summary_large_image',
-    title: 'مطبخ ام خاطر - أفضل طبخ بيتي في دبي',
-    description: 'وجبات طازجة يومياً، طبخ منزلي صحي، أكلات عربية أصيلة، توصيل سريع في دبي',
-    images: ['https://github.com/hanynan8/Menu-Pic/blob/main/WhatsApp%20Image%202025-12-14%20at%204.55.14%20PM.jpeg?raw=true'],
-    creator: '@umkhaterkitchen',
+    card: "summary_large_image",
+    title: "You're Invited — Youssef & Mariam",
+    description: "Join us for an evening of love, laughter, and cherished memories.",
+    images: [
+      "https://images.unsplash.com/photo-1548092372-0d1bd40894a3?w=1200&q=80",
+    ],
   },
-  
-  verification: {
-    google: 'your-google-verification-code',
-    yandex: 'your-yandex-verification-code',
-  },
-  
-  category: 'food',
-  
+
   other: {
-    'application-name': 'مطبخ ام خاطر',
-    'apple-mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-status-bar-style': 'default',
-    'apple-mobile-web-app-title': 'مطبخ ام خاطر',
-    'format-detection': 'telephone=no',
-    'mobile-web-app-capable': 'yes',
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "apple-mobile-web-app-title": "Wedding Invitation",
+    "mobile-web-app-capable": "yes",
+    "theme-color": "#110b07",
   },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ar" dir="rtl">
+    <html lang="en">
       <head>
-        {/* Custom Favicon Styling */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" href="/icon.png" type="image/png" />
-        <link rel="apple-touch-icon" href="/apple-icon.png" />
-        
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            link[rel="icon"], 
-            link[rel="shortcut icon"],
-            link[rel="apple-touch-icon"] {
-              border-radius: 50% !important;
-            }
-          `
-        }} />
-        
-        {/* Structured Data for Rich Snippets */}
+        {/* 💍 Emoji Favicon — بيشتغل على كل المتصفحات الحديثة */}
+        <link
+          rel="icon"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💍</text></svg>"
+        />
+        {/* Apple Touch Icon بديل بسيط */}
+        <link
+          rel="apple-touch-icon"
+          href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23110b07'/><text y='.9em' font-size='80' x='10'>💍</text></svg>"
+        />
+        <meta name="theme-color" content="#110b07" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+        {/* Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Restaurant",
-              "name": "مطبخ ام خاطر",
-              "alternateName": "Um Khater Kitchen",
-              "description": "أفضل مطبخ بيتي في دبي - وجبات طازجة يومياً",
-              "servesCuisine": ["Arabic", "Middle Eastern", "Home Cooking"],
-              "address": {
-                "@type": "PostalAddress",
-                "addressLocality": "Dubai",
-                "addressCountry": "AE"
+              "@type": "Event",
+              name: "Wedding of Youssef El-Sayed & Mariam Fouad",
+              description:
+                "You are cordially invited to celebrate the wedding of Youssef El-Sayed and Mariam Fouad.",
+              startDate: "2025-08-15T19:00:00",
+              eventStatus: "https://schema.org/EventScheduled",
+              eventAttendanceMode:
+                "https://schema.org/OfflineEventAttendanceMode",
+              location: {
+                "@type": "Place",
+                name: "Fairmont Nile City",
+                address: {
+                  "@type": "PostalAddress",
+                  streetAddress: "2005 Corniche El Nil, Ramlet Beaulac",
+                  addressLocality: "Cairo",
+                  addressCountry: "EG",
+                },
               },
-              "priceRange": "$$",
-              "telephone": "+971-XX-XXX-XXXX", // حط رقم التليفون
-              "url": "https://yourdomain.com", // غير الدومين هنا
-              "image": "https://github.com/hanynan8/Menu-Pic/blob/main/WhatsApp%20Image%202025-12-14%20at%204.55.14%20PM.jpeg?raw=true",
-              "sameAs": [
-                "https://www.facebook.com/umkhaterkitchen", // حط لينكات السوشيال ميديا
-                "https://www.instagram.com/umkhaterkitchen",
-                "https://twitter.com/umkhaterkitchen"
-              ]
-            })
+              organizer: {
+                "@type": "Person",
+                name: "Youssef El-Sayed & Mariam Fouad",
+              },
+            }),
           }}
         />
       </head>
-      <body className="antialiased">
-          <LanguageProvider>
-              {/* مكون الإشعارات - مهم جداً! */}
-              
-              {children}
-          </LanguageProvider>
+      <body style={{ margin: 0, padding: 0, background: "#110b07" }}>
+        {children}
       </body>
     </html>
   );
