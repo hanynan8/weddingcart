@@ -3,7 +3,7 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Wedding Invitation | Youssef & Mariam",
+  title: "Wedding Invitation",
   description: "You are cordially invited to celebrate the wedding of Youssef El-Sayed and Mariam Fouad. Join us for an evening of love, laughter, and cherished memories.",
 
   icons: {
