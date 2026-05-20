@@ -2,9 +2,6 @@
 
 import "./globals.css";
 import { LanguageProvider } from '@/contexts/LanguageContext';
-import { CartProvider, CartNotification } from './components/cart';
-import SessionWrapper from './components/SessionWrapper';
-import Footer from './components/footer';
 
 export const metadata = {
   title: "مطبخ ام خاطر | طبخ بيتي - أكل صحي - توصيل سريع في دبي | Um Khater Kitchen Dubai",
@@ -170,17 +167,11 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="antialiased">
-        <SessionWrapper>
           <LanguageProvider>
-            <CartProvider>
               {/* مكون الإشعارات - مهم جداً! */}
-              <CartNotification />
               
               {children}
-              <Footer />
-            </CartProvider>
           </LanguageProvider>
-        </SessionWrapper>
       </body>
     </html>
   );
