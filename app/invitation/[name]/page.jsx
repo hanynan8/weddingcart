@@ -267,24 +267,41 @@ const getCriticalStyles = () => `
 `;
 
 /* ─── Particles ─── */
+// ─── استبدل تعريف particles بالآتي ───
 const particles = [
-  { symbol: "❤", left: "15%", size: "1.8rem", dur: "8s",  delay: "0s",  rotate: "360deg",  color: "rgba(220,50,50,1)" },
-  { symbol: "❤", left: "50%", size: "1.85rem",dur: "9s",  delay: "4s",  rotate: "300deg",  color: "rgba(200,40,40,1)" },
-  { symbol: "❤", left: "80%", size: "2rem",   dur: "12s", delay: "8s",  rotate: "270deg",  color: "rgba(230,60,60,1)" },
-  { symbol: "❤", left: "33%", size: "1.6rem", dur: "10s", delay: "2s",  rotate: "320deg",  color: "rgba(210,45,45,1)" },
-  { symbol: "❤", left: "65%", size: "1.75rem",dur: "11s", delay: "6s",  rotate: "280deg",  color: "rgba(225,55,55,1)" },
+  { symbol: "❤", left: "15%", size: "1.8rem", dur: "8s",  delay: "0s",  rotate: "360deg"  },
+  { symbol: "❤", left: "50%", size: "1.85rem",dur: "9s",  delay: "4s",  rotate: "300deg"  },
+  { symbol: "❤", left: "80%", size: "2rem",   dur: "12s", delay: "8s",  rotate: "270deg"  },
+  { symbol: "❤", left: "33%", size: "1.6rem", dur: "10s", delay: "2s",  rotate: "320deg"  },
+  { symbol: "❤", left: "65%", size: "1.75rem",dur: "11s", delay: "6s",  rotate: "280deg"  },
   { symbol: "✿", left: "25%", size: "1.3rem", dur: "8s",  delay: "2s",  rotate: "-270deg" },
   { symbol: "✿", left: "55%", size: "1.9rem", dur: "9s",  delay: "6s",  rotate: "-360deg" },
   { symbol: "✿", left: "85%", size: "2.3rem", dur: "10s", delay: "1s",  rotate: "-300deg" },
 ];
 
-function FloatingParticles({ heartsOnly = false }) {
-  const hearts = particles.filter((p) => p.symbol === "❤");
-  const flowers = particles.filter((p) => p.symbol === "✿");
+// ─── استبدل FloatingParticles بالكامل بالآتي ───
+function HeartSvg({ size, color }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      width={size}
+      height={size}
+      style={{ display: "block", overflow: "visible" }}
+    >
+      <path
+        d="M12 21C12 21 3 13.5 3 8a4.5 4.5 0 0 1 9-1 4.5 4.5 0 0 1 9 1c0 5.5-9 13-9 13z"
+        fill={color}
+        stroke="none"
+      />
+    </svg>
+  );
+}
 
-  const filtered = heartsOnly
-    ? hearts
-    : [...hearts.slice(0, 3), ...flowers];  // ← أول 3 قلوب + كل الوردات
+function FloatingParticles({ heartsOnly = false, heartColor = "rgba(220,50,50,1)" }) {
+  const hearts  = particles.filter((p) => p.symbol === "❤");
+  const flowers = particles.filter((p) => p.symbol === "✿");
+  const filtered = heartsOnly ? hearts : [...hearts.slice(0, 3), ...flowers];
 
   return (
     <>
@@ -293,15 +310,25 @@ function FloatingParticles({ heartsOnly = false }) {
           key={i}
           className="fp"
           style={{
-            left: p.left,
-            fontSize: p.size,
+            left:              p.left,
+            fontSize:          p.size,
             animationDuration: p.dur,
-            animationDelay: p.delay,
-            "--rot": p.rotate,
-            color: heartsOnly ? p.color : "rgba(255,255,255,0.9)",
+            animationDelay:    p.delay,
+            "--rot":           p.rotate,
+            color:             heartsOnly ? heartColor : "rgba(255,255,255,0.9)",
+            display:           "flex",
+            alignItems:        "center",
+            justifyContent:    "center",
           }}
         >
-          {p.symbol}
+          {p.symbol === "❤" ? (
+            <HeartSvg
+              size={p.size.replace("rem", "") * 16}
+              color={heartsOnly ? heartColor : "rgba(255,255,255,0.9)"}
+            />
+          ) : (
+            p.symbol
+          )}
         </span>
       ))}
     </>
@@ -532,7 +559,7 @@ export default function WeddingInvitation() {
               filter: "sepia(0.1) brightness(0.72) saturate(0.85)",
             }}
           />
-          <FloatingParticles heartsOnly />
+          <FloatingParticles heartsOnly heartColor="rgba(220,50,50,1)" />
           <div
             className={`env-wrap relative z-10 flex flex-col items-center gap-8 ${envelopeOpen ? "open" : ""}`}
             style={{ width: "100%", padding: "0 24px" }}
