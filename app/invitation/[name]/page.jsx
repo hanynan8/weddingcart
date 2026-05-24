@@ -390,7 +390,6 @@ function useParallax() {
 
 /* ─── Music hook ─── */
 function useMusic() {
-  const [playing, setPlaying] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -398,43 +397,17 @@ function useMusic() {
     audio.loop = true;
     audio.volume = 0.1;
     audioRef.current = audio;
-
-    // محاولة تشغيل تلقائي فوري (بيشتغل في بعض المتصفحات)
-    audio.play()
-      .then(() => setPlaying(true))
-      .catch(() => {
-        // لو فشلت، اشتغل على أول تفاعل من اليوزر
-        const start = () => {
-          audio.play()
-            .then(() => setPlaying(true))
-            .catch(() => {});
-          ["click", "touchstart", "keydown"].forEach(ev =>
-            document.removeEventListener(ev, start)
-          );
-        };
-        ["click", "touchstart", "keydown"].forEach(ev =>
-          document.addEventListener(ev, start, { once: true })
-        );
-      });
-
     return () => {
       audio.pause();
       audio.src = "";
     };
   }, []);
 
-  const toggle = () => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing) {
-      audio.pause();
-      setPlaying(false);
-    } else {
-      audio.play().then(() => setPlaying(true)).catch(() => {});
-    }
+  const play = () => {
+    audioRef.current?.play().catch(() => {});
   };
 
-  return { playing, toggle };
+  return { play };
 }
 const BG_URL =
   "https://raw.githubusercontent.com/hanynan8/e-commerce/refs/heads/main/lucid-origin_a_surreal_and_vibrant_cinematic_photo_of_A_dreamy_Victorian-era_watercolor_illus-0%20(3).jpg";
@@ -449,7 +422,7 @@ export default function WeddingInvitation() {
   const [notFound,     setNotFound]     = useState(false);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
   const [showCard,     setShowCard]     = useState(false);
-  const { playing, toggle } = useMusic();
+  const { play } = useMusic();
 
   useReveal(showCard);
   useParallax();
@@ -477,12 +450,12 @@ export default function WeddingInvitation() {
       })
       .catch(() => setNotFound(true));
   }, [routeName]);
-
-  const handleEnvelopeClick = () => {
-    if (envelopeOpen) return;
-    setEnvelopeOpen(true);
-    setTimeout(() => setShowCard(true), 950);
-  };
+const handleEnvelopeClick = () => {
+  if (envelopeOpen) return;
+  play(); // ← أضف السطر ده
+  setEnvelopeOpen(true);
+  setTimeout(() => setShowCard(true), 950);
+};
 
   const countdown = useCountdown(data?.wedding?.date ?? "2027-08-15T19:00:00");
 
@@ -517,37 +490,6 @@ export default function WeddingInvitation() {
   return (
     <>
       <style>{getCriticalStyles()}</style>
-
-      {/* ══════ زرار الموسيقى ══════ */}
-      <button
-        onClick={toggle}
-        title={playing ? "إيقاف الموسيقى" : "تشغيل الموسيقى"}
-        style={{
-          position:            "fixed",
-          top:                 "16px",
-          right:               "16px",
-          zIndex:              9999,
-          width:               "44px",
-          height:              "44px",
-          borderRadius:        "50%",
-          border:              "1.5px solid rgba(255,255,255,0.55)",
-          background:          "rgba(0,0,0,0.38)",
-          backdropFilter:      "blur(10px)",
-          WebkitBackdropFilter:"blur(10px)",
-          cursor:              "pointer",
-          display:             "flex",
-          alignItems:          "center",
-          justifyContent:      "center",
-          fontSize:            "1.2rem",
-          color:               "#fff",
-          boxShadow:           "0 2px 16px rgba(0,0,0,0.25)",
-          transition:          "background 0.2s",
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.6)")}
-        onMouseLeave={(e) => (e.currentTarget.style.background = "rgba(0,0,0,0.38)")}
-      >
-        {playing ? "⏸" : "▶"}
-      </button>
 
       {/* ══════ ENVELOPE ══════ */}
       {!showCard && (
